@@ -1,0 +1,15 @@
+import pandas as pd
+
+def calcolo_roba_nebraska():
+    print("Calculations have started")
+    print("Calculations have finished. Here's the results")
+
+    df = pd.read_csv('agricoltura.csv')
+
+    totale_calcoli_roba_df = df.groupby('coltura') ['sacchi_venduti'].sum()
+    print(totale_calcoli_roba_df)
+
+    totale_calcoli_roba_df.to_csv('calcoli_agricoltura_report',index=False)
+
+calcolo_roba_nebraska()
+                            
