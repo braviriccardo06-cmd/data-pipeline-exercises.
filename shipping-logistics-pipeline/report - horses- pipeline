@@ -1,0 +1,19 @@
+import pandas as pd
+
+def report_horses_nebraska():
+    print("Calculations have started")
+    print("Here are the results")
+
+    df = pd.read_csv("horses_feed.csv")
+
+    df['hay_bales'] = df['hay_bales'].fillna(0)
+
+    df['breed'] = df['breed'].str.upper()
+
+    results_horses_df = df.groupby('breed') ['hay_bales'].sum()
+    print(results_horses_df)
+
+    results_horses_df.to_csv('results_horses')
+
+report_horses_nebraska()
+
