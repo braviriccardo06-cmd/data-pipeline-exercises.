@@ -1,0 +1,19 @@
+import pandas as pd
+
+def report_fabbrica_robot():
+    print("Calculations have begun")
+    print("Here are the results")
+
+    df = pd.read_csv('fabbrica_robot.csv')
+
+    df['ore_lavoro'] = df['ore_lavoro'].fillna(0)
+
+    df['prodotto'] = df['prodotto'].str.upper()
+    df['reparto'] = df['reparto'].str.lower()
+
+    report_fabbrica_robot_df = df.groupby('prodotto') ['ore_lavoro'].agg(['sum','mean','max','min','count'])
+    print(report_fabbrica_robot_df)
+
+    report_fabbrica_robot_df.to_csv('risultato_report_fabbrica')
+
+report_fabbrica_robot()
