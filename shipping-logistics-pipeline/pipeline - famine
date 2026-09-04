@@ -1,0 +1,18 @@
+import pandas as pd
+
+def report_consumo_mangime():
+    print("Calculations have begun")
+    print("Here are the results")
+
+    df = pd.read_csv('consumo_mangime.csv')
+
+    df['data_registro'] = pd.to_datetime(df['data_registro'])
+
+    df['report_annuale'] = df['data_registro'].dt.to_period('Y')
+
+    totale_df = df.groupby('report_annuale') ['sacchi'].sum()
+    print(totale_df)
+
+    totale_df.to_csv('risultato_report_consumo_mangime')
+
+report_consumo_mangime()
