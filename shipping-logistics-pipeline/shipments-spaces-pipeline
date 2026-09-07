@@ -1,0 +1,16 @@
+import pandas as pd
+
+def report_shipments_spaces:
+    print("Calculations have begun")
+    print("Here are the results")
+
+    df = pd.read_csv('shipments spaces.csv')
+
+    df['company'] = df['company'].str.strip()
+
+    totale_df = df.groupby('company') ['kilos'].sum()
+    print(totale_df)
+
+    totale_df.to_csv('risultati_report_shipments_spaces')
+
+report_shipments_spaces
