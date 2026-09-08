@@ -1,0 +1,16 @@
+import pandas as pd
+
+def report_shipments_omaha():
+    print("Generating report for Omaha shipments...")
+    print("Report generated successfullly")
+
+    df = pd.read_csv('shipments_omaha.csv')
+
+    totale_df =df.groupby('compagnia').agg({'chili': 'sum', 'id_spedizione': 'count'})
+
+    totale_df = totale_df.rename(columns={'chili': 'Total_Weight_LBS', 'id_spedizione': 'Total_Shipments'})
+    print(totale_df)
+
+    totale_df.to_csv('results_report_shipments_omaha.csv')
+
+report_shipments_omaha()
