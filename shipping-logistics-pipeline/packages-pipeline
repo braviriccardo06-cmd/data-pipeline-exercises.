@@ -1,0 +1,14 @@
+import pandas as pd
+
+def report_register_packages():
+    print("Report is being generated...")
+    print("Report generated successfully")
+
+    df = pd.read_csv('registro_pacco.csv')
+
+    report_df = df['tipo_pacco'].value_counts()
+    print(report_df)
+
+    report_df.to_csv('result_report_register_packages')
+
+report_register_packages()
