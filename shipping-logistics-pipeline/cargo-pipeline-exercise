@@ -1,0 +1,23 @@
+import pandas as pd
+
+def report_cargo_omaha():
+    print("Report is being generated")
+    print("Report generated successfully")
+
+    df = pd.read_csv('cargo_omaha_sporco.csv')
+
+    df = df.drop_duplicates()
+
+    df['company'] = df['company'].str.strip()
+    df['company'] = df['company'].replace('','UNKNOWN')
+    df['company'] = df['company'].fillna('UNKNOWN')
+
+    df['raw_chilis'] = df['raw_chilis'].str.replace('KG', '')
+    df['raw_chilis'] = df['raw_chilis'].astype(float)
+
+    total_df = df.groupby('company') ['raw_chilis'].sum()
+    print(total_df)
+
+    total_df.to_csv(result_report_cargo_omaha)
+
+report_cargo_omaha()
