@@ -1,0 +1,19 @@
+import pandas as pd
+
+def report_autisti():
+    print("Report is being generated...")
+    print("Report generated successfully")
+
+    df_viaggi = pd.read_csv('registro_viaggi.csv')
+    df_autisti = pd.read_csv('anagrafica_autisti.csv')
+
+    df_completo = pd.merge(df_viaggi, df_autisti, on ='id_autista')
+
+    total_df = df_completo.groupby('nome_autista') ['chili'].sum()
+
+    total_df = total_df.sort_values(ascending = False)
+
+    print(total_df)
+    total_df.to_csv('result_report_autisti')
+
+report_autisti()
