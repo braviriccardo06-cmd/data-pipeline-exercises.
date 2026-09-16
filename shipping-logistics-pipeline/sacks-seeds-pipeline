@@ -1,0 +1,19 @@
+import pandas as pd
+
+def report_order_seeds():
+    print("The report is being generated")
+    print("Report generated successfully")
+
+    df = pd.read_csv('order_seeds.csv')
+
+    df = df.query("sacks > 60")
+
+    total_df = df.groupby('product').agg({'sacks': ['sum', 'mean']})
+
+    total_df = total_df.rename(columns = {'sacks': 'Total_Sacks', 'product': 'Total Products'})
+    print(total_df)
+    
+    total_df.to_csv('result_report_order_seeds')
+
+report_order_seeds()
+
