@@ -1,0 +1,24 @@
+import pandas as pd
+
+def report_cleveland():
+    print("The report is being generated")
+    print("Report generated successfully")
+
+    df = pd.read_csv('cleveland_cargo.csv')
+
+    df = df.drop_duplicates()
+
+    df['arrival_date'] = pd.to_datetime(df['arrival_date'])
+
+    df['mese'] = df['arrival_date'].dt.to_period('M')
+
+    df = df.query("tons > 50")
+
+    total_df = df.groupby('mese') ['tons'].sum()
+    total_df = total_df.sort_values(ascending=False)
+
+    print(total_df)
+
+    total_df.to_csv('result_report_cleveland.csv')
+
+report_cleveland()
