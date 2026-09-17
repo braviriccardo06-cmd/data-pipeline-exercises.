@@ -1,0 +1,20 @@
+import pandas as pd
+
+def report_warehouse():
+    print("The report is being generated")
+    print("Report generated successfully")
+
+    stocks_df = pd.read_csv('warehouse_stocks.csv')
+    locations_df = pd.read_csv('warehouse_locations.csv')
+
+    df_city_name = pd.merge(stocks_df, locations_df, on = 'warehouse_id')
+
+    total_df = df_city_name.groupby('city_name') ['quantity'].sum()
+
+    total_df = total_df.sort_values(ascending=False)
+
+    print(total_df)
+
+    total_df.to_csv('result_report_warehouse.csv')
+
+report_warehouse()
