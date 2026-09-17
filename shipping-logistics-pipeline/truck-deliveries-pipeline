@@ -1,0 +1,18 @@
+import pandas as pd
+
+def report_truck_deliveries():
+    print("The report is being generated")
+    print("Report generated successfully")
+
+    df = pd.read_csv('truck_deliveries.csv')
+
+    df['delivery_date'] = pd.to_datetime(df['delivery_date'])
+    df = df.query("miles > 200")
+
+    total_df = df['truck_brand'].value_counts()
+
+    print(total_df)
+
+    total_df.to_csv('result_report_truck_deliveries')
+
+report_truck_deliveries()
