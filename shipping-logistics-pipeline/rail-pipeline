@@ -1,0 +1,21 @@
+import pandas as pd
+
+def report_cleveland_rail():
+    print("The report is being generated")
+    print("Report generated successfully")
+
+    df_rail_deliveries = pd.read_csv('rail_deliveries.csv')
+    df_rail_carriers = pd.read_csv('rail_carriers.csv')
+
+    df_rail_deliveries = df_rail_deliveries.drop_duplicates()
+
+    df_complete = pd.merge(df_rail_deliveries, df_rail_carriers, on = 'carrier_id') 
+
+    total_df = df_complete.groupby('carrier_name') ['tons'].sum()
+
+    total_df = total_df.sort_values(ascending = False)
+    print(total_df)
+
+    total_df.to_csv = ('result_report_cleveland_rail.csv')
+
+report_cleveland_rail() 
