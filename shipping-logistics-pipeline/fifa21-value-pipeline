@@ -1,0 +1,27 @@
+import pandas as pd
+import numpy as np
+
+df = pd.read_csv('fifa21 raw data v2.csv', low_memory=False)
+
+print(df.columns.tolist())
+
+df['Value'] = df['Value'].str.replace('€','')
+
+# 🌟 AGGIUNGI QUESTA RIGUCCIA SOTTO: serve a scassinare il lucchetto di Pandas
+df['Value'] = df['Value'].astype(object)
+
+
+# 1. Se la riga finisce con 'M', togliamo la 'M' e moltiplichiamo per un milione
+is_million = df['Value'].str.contains('M', na=False)
+df.loc[is_million, 'Value'] = df.loc[is_million, 'Value'].str.replace('M', '').astype(float) * 1000000
+
+# 2. Se la riga finisce con 'K', togliamo la 'K' e moltiplichiamo per mille
+is_kilo = df['Value'].str.contains('K', na=False)
+df.loc[is_kilo, 'Value'] = df.loc[is_kilo, 'Value'].str.replace('K', '').astype(float) * 1000
+
+# 3. Trasformiamo l'intera colonna finale in un numero decimale puro
+df['Value'] = df['Value'].astype(float)
+
+print('The result has loaded successfully')
+print('------------------------------------------------')
+print(df[['LongName', 'Value']].head())
