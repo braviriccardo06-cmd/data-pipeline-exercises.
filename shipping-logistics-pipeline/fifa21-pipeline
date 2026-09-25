@@ -1,0 +1,37 @@
+import pandas as pd
+import numpy as np
+
+df = pd.read_csv('fifa21 raw data v2.csv', low_memory=False)
+
+# Rimuoviamo il simbolo dell'euro all'inizio
+df['Value'] = df['Value'].str.replace('€', '', regex=False)
+df['Wage'] = df['Wage'].str.replace("€", "", regex=False)
+df['Release Clause'] = df['Release Clause'].str.replace("€", "", regex=False)
+
+# Creiamo una funzione di conversione pulita
+def convert_value(val):
+    if pd.isna(val) or val == '0':
+        return 0.0
+    
+    val = str(val).strip()
+    
+    if 'M' in val:
+        return float(val.replace('M', '')) * 1_000_000
+    elif 'K' in val:
+        return float(val.replace('K', '')) * 1_000
+    
+    try:
+        return float(val)
+    except ValueError:
+        return 0.0
+
+# Applichiamo la trasformazione in un colpo solo
+df['Value'] = df['Value'].apply(convert_value)
+df['Wage'] = df['Wage'].apply(convert_value)
+df['Release Clause'] = df['Release Clause'].apply(convert_value)
+df['Hits'] = df['Hits'].fillna(0)
+
+print('The result has loaded successfully')
+print('------------------------------------------------------------------')
+print(df[['LongName', 'Value', 'Wage', 'Hits', 'Release Clause']].head())
+print('------------------------------------------------------------------')
