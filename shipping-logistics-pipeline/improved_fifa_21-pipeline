@@ -1,0 +1,30 @@
+import pandas as pd
+import numpy as np
+
+df = pd.read_csv('fifa21 raw data v2.csv', low_memory=False)
+
+df['Value'] = df['Value'].str.replace('€', '', regex=False)
+
+
+def convert_value(val):
+    if pd.isna(val) or val == '0':
+        return 0.0
+    
+    val = str(val).strip()
+    
+    if 'M' in val:
+        return float(val.replace('M', '')) * 1_000_000
+    elif 'K' in val:
+        return float(val.replace('K', '')) * 1_000
+    
+    try:
+        return float(val)
+    except ValueError:
+        return 0.0
+
+
+df['Value'] = df['Value'].apply(convert_value)
+
+print('The result has loaded successfully')
+print('------------------------------------------------')
+print(df[['LongName', 'Value']].head())
